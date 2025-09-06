@@ -122,6 +122,36 @@ echo "source ~/ros2_ws/install/setup.bash" >> ~/.bashrc
 
 ---
 
+## OP3 Webots Simulation with ROS2
+
+Follow these steps to launch and control the OP3 robot in Webots using ROS2:
+
+1. **Source your ROS2 workspace:**
+
+   ```bash
+   source ~/robotis_ws/install/setup.bash
+   ```
+
+2. **Launch the OP3 robot in Webots:**
+
+   ```bash
+   ros2 launch op3_webots_ros2 robot_launch.py
+   ```
+
+   Wait for the Webots simulator to fully load.
+
+3. **Control the robot via ROS2:**
+
+   Once Webots is running, you can control the robot using any compatible ROS2 package. For example, try:
+
+   ```bash
+   ros2 launch op3_gui_demo op3_demo.launch.py
+   ```
+
+You're now ready to interact with the OP3 robot in simulation using ROS2!
+
+---
+
 ## 📝 Notes
 
 * If you encounter GPG errors (e.g. `NO_PUBKEY`), check if line 7 in `enable_repo.sh` is working. Then try running `./enable_repo.sh` again.
