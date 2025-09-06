@@ -75,7 +75,8 @@ Installs the main ROS 2 Jazzy desktop package and common tools.
 ./robotis-op3/install_additional.sh
 ```
 
-Installs packages and dependencies specific to the ROBOTIS OP3 robot.
+Updates the package list, installs `python3-rosdep`, and initializes and updates `rosdep` for managing ROS package dependencies.
+> NOTE: if there's an error like "ERROR: default sources list file already exists" it means you've already done this before. Just proceed with the next step :)
 
 ---
 
@@ -85,7 +86,7 @@ Installs packages and dependencies specific to the ROBOTIS OP3 robot.
 ./robotis-op3/install_robotis_ros_packages.sh
 ```
 
-Clones and builds the necessary ROS packages for OP3 robot control.
+Clones ROS packages for OP3 robot control, including for Gazebo and Webots simulations!
 
 ---
 
@@ -94,13 +95,13 @@ Clones and builds the necessary ROS packages for OP3 robot control.
 After successful installation, source the ROS 2 setup script:
 
 ```bash
-source /opt/ros/jazzy/setup.bash
+source ~/robotis_ws/install/setup.bash
 ```
 
 For convenience, add this line to your `~/.bashrc`:
 
 ```bash
-echo "source /opt/ros/jazzy/setup.bash" >> ~/.bashrc
+echo "source ~/robotis_ws/install/setup.bash" >> ~/.bashrc
 ```
 
 ---
@@ -123,8 +124,5 @@ echo "source ~/ros2_ws/install/setup.bash" >> ~/.bashrc
 
 ## 📝 Notes
 
-* If you encounter GPG errors (e.g. `NO_PUBKEY`), refer to the ROS 2 key update instructions in the issues section.
+* If you encounter GPG errors (e.g. `NO_PUBKEY`), check if line 7 in `enable_repo.sh` is working. Then try running `./enable_repo.sh` again.
 * Ensure you run these scripts **one at a time**, and watch for any installation prompts or errors.
-* Scripts should be run from the root of the repository unless otherwise specified.
-
----
