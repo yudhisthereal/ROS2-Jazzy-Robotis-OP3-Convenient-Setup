@@ -1,6 +1,7 @@
 #!/usr/bin/bash
 
 # Remove old ones, if they exist
+echo "Attempting to remove old, conflicting source and keyring
 sudo rm /usr/share/keyrings/ros-archive-keyring.gpg
 sudo rm /etc/apt/sources.list.d/ros2.list
 
