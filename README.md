@@ -1,7 +1,7 @@
-# 🛠️ ROS 2 Jazzy Installation Guide
+# 🛠️ ROS 2 Jazzy + ROBOTIS OP3 + Webots Installation Guide
 
-This guide will walk you through setting up **ROS 2 Jazzy Jalisco** on a supported Ubuntu 24.04 (Noble) or compatible system like Linux Mint 22.  
-The process is automated through shell scripts provided in this repository.
+This guide walks you through setting up **ROS 2 Jazzy Jalisco** with **ROBOTIS OP3** packages and **Webots simulation** on Ubuntu 24.04 (Noble) or Linux Mint 22.  
+The installation is automated using the provided shell scripts.
 
 ---
 
@@ -10,23 +10,47 @@ The process is automated through shell scripts provided in this repository.
 - Linux Mint 22 or Ubuntu 24.04 (Noble)
 - Administrative (sudo) privileges
 - Internet connection
+- Git and `colcon` installed
 
 ---
 
-## 🚧 Step 1: Make Shell Scripts Executable
+## 🚀 One-Step Setup (Recommended)
 
-Before running the setup scripts, ensure all `.sh` files have execute permissions.
+Run the interactive setup script to install everything in one go:
 
 ```bash
-chmod +x *.sh
-chmod +x robotis-op3/*.sh
-````
+chmod +x setup.sh
+./setup.sh
+```
+
+The script will:
+
+1. Set system locale (UTF-8)
+2. Enable the ROS 2 Jazzy repository
+3. Install development tools
+4. Install ROS 2 Jazzy Desktop
+5. Install additional dependencies for OP3
+6. Install ROBOTIS ROS packages
+7. Run **first `colcon build`**
+8. Install Webots package for OP3
+9. Run **second `colcon build`**
+10. Ask whether to auto-source your ROS2 workspace in `~/.bashrc` or `~/.zshrc`
+
+### 🧑‍💻 Error Handling
+
+If a step fails, the script will **pause** and ask:
+
+```
+Do you want to continue anyway? (y/n):
+```
+
+You can choose to continue or exit safely.
 
 ---
 
-## 🚀 Step 2: Execute Setup Scripts in Order
+## 🚧 Manual Setup (Step-by-Step)
 
-Run each script one at a time **in the following order**:
+If you prefer to run the scripts manually, execute them in the following order:
 
 ### 1. 🌐 Set System Locale (UTF-8)
 
@@ -34,20 +58,13 @@ Run each script one at a time **in the following order**:
 ./set_locale.sh
 ```
 
-Ensures the system uses a UTF-8 locale required by ROS 2.
-
----
-
 ### 2. 📦 Enable ROS 2 Repository
 
 ```bash
 ./enable_repo.sh
 ```
-> **NOTE:** If you're on Ubuntu, edit the script to replace `$UBUNTU_CODENAME` with `$VERSION_CODENAME`.
 
-Adds the ROS 2 Jazzy APT repository and GPG key for package verification.
-
----
+> **NOTE (Ubuntu only):** edit the script and replace `$UBUNTU_CODENAME` with `$VERSION_CODENAME`.
 
 ### 3. 🛠️ Install Development Tools
 
@@ -55,19 +72,11 @@ Adds the ROS 2 Jazzy APT repository and GPG key for package verification.
 ./install_devtools.sh
 ```
 
-Installs required build tools and dependencies for compiling ROS 2 packages.
-
----
-
 ### 4. 🤖 Install ROS 2 Jazzy Desktop
 
 ```bash
 ./install_ros_jazzy.sh
 ```
-
-Installs the main ROS 2 Jazzy desktop package and common tools.
-
----
 
 ### 5. 🔧 Install Additional Dependencies for ROBOTIS OP3
 
@@ -75,58 +84,58 @@ Installs the main ROS 2 Jazzy desktop package and common tools.
 ./robotis-op3/install_additional.sh
 ```
 
-Updates the package list, installs `python3-rosdep`, and initializes and updates `rosdep` for managing ROS package dependencies.
-> NOTE: if there's an error like "ERROR: default sources list file already exists" it means you've already done this before. Just proceed with the next step :)
-
----
-
 ### 6. 🤖 Install ROBOTIS ROS Packages
 
 ```bash
 ./robotis-op3/install_robotis_ros_packages.sh
 ```
 
-Clones ROS packages for OP3 robot control, including for Gazebo and Webots simulations!
+### 7. 📦 First Build
 
----
+```bash
+cd ~/robotis_ws
+colcon build
+```
 
-## 🧪 Final Step: Source ROS 2 Environment
+### 8. 🌐 Install Webots Package
 
-After successful installation, source the ROS 2 setup script:
+```bash
+./robotis-op3/install_webots_package.sh
+```
+
+### 9. 📦 Second Build
+
+```bash
+cd ~/robotis_ws
+colcon build
+```
+
+### 10. 🧪 Source ROS 2 Environment
 
 ```bash
 source ~/robotis_ws/install/setup.bash
 ```
 
-For convenience, add this line to your `~/.bashrc`:
+For convenience, add sourcing permanently:
 
-```bash
-echo "source ~/robotis_ws/install/setup.bash" >> ~/.bashrc
-```
+* **Bash users**:
 
----
+  ```bash
+  echo "source ~/robotis_ws/install/setup.bash" >> ~/.bashrc
+  ```
+* **Zsh users**:
 
-## 📦 Workspace (Optional)
-
-If using a custom ROS 2 workspace (e.g. `~/ros2_ws`), be sure to source it after building:
-
-```bash
-source ~/ros2_ws/install/setup.bash
-```
-
-Again, for convenience, add this line to your `~/.bashrc`:
-
-```bash
-echo "source ~/ros2_ws/install/setup.bash" >> ~/.bashrc
-```
+  ```bash
+  echo "source ~/robotis_ws/install/setup.bash" >> ~/.zshrc
+  ```
 
 ---
 
-## OP3 Webots Simulation with ROS2
+## 🤖 Running OP3 in Webots
 
-Follow these steps to launch and control the OP3 robot in Webots using ROS2:
+Once installed and built, you can run the OP3 simulation in Webots:
 
-1. **Source your ROS2 workspace:**
+1. **Source your workspace:**
 
    ```bash
    source ~/robotis_ws/install/setup.bash
@@ -138,21 +147,26 @@ Follow these steps to launch and control the OP3 robot in Webots using ROS2:
    ros2 launch op3_webots_ros2 robot_launch.py
    ```
 
-   Wait for the Webots simulator to fully load.
+   Wait until the Webots simulator fully loads.
 
-3. **Control the robot via ROS2:**
-
-   Once Webots is running, you can control the robot using any compatible ROS2 package. For example, try:
+3. **Control the robot:**
+   For example, launch the demo GUI:
 
    ```bash
    ros2 launch op3_gui_demo op3_demo.launch.py
    ```
 
-You're now ready to interact with the OP3 robot in simulation using ROS2!
-
 ---
 
 ## 📝 Notes
 
-* If you encounter GPG errors (e.g. `NO_PUBKEY`), check if line 7 in `enable_repo.sh` is working. Then try running `./enable_repo.sh` again.
-* Ensure you run these scripts **one at a time**, and watch for any installation prompts or errors.
+* If you encounter `NO_PUBKEY` or GPG errors, re-run `./enable_repo.sh`.
+* Always ensure you build the workspace **twice**:
+
+  1. After installing ROBOTIS ROS packages
+  2. After installing Webots package
+* You can skip auto-source in `setup.sh` and manually source your workspace if you prefer.
+
+---
+
+🎉 You’re now ready to develop and simulate the ROBOTIS OP3 in Webots using ROS 2 Jazzy!
