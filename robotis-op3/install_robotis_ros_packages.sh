@@ -12,4 +12,3 @@ git clone https://github.com/ROBOTIS-GIT/ROBOTIS-OP3-ETC.git --branch=jazzy-deve
 git clone https://github.com/ROBOTIS-GIT/ROBOTIS-OP3-msgs.git --branch=jazzy-devel
 git clone https://github.com/ROBOTIS-GIT/ROBOTIS-OP3-Tools.git --branch=jazzy-devel
 git clone https://github.com/ROBOTIS-GIT/ROBOTIS-Utility.git --branch=jazzy-devel
-git clone https://github.com/ROBOTIS-GIT/ROBOTIS-OP3-Simulations.git --branch=jazzy-devel
