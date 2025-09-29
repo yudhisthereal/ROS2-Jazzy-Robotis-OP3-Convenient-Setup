@@ -1,5 +1,10 @@
 #!/usr/bin/bash
 
+# Remove old ones, if they exist
+sudo rm /usr/share/keyrings/ros-archive-keyring.gpg
+sudo rm /etc/apt/sources.list.d/ros2.list
+
+
 # Function to prompt user to choose Ubuntu version codename
 choose_ubuntu_version() {
   echo "Choose your Ubuntu version:"
