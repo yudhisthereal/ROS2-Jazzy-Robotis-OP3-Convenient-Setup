@@ -146,6 +146,10 @@ Once installed and built, you can run the OP3 simulation in Webots:
    ```bash
    ros2 launch op3_webots_ros2 robot_launch.py
    ```
+   Open another terminal session, and execute the following. If you don't, you won't be able to control the robot.
+   ```bash
+   ros2 launch op3_manager op3_simulation.launch.py  
+   ```
 
    Wait until the Webots simulator fully loads.
 
