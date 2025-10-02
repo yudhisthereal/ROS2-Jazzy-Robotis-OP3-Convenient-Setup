@@ -43,6 +43,7 @@ run_step "Installing ROBOTIS ROS packages" ./robotis-op3/install_robotis_ros_pac
 run_step "First colcon build" bash -c "cd ~/robotis_ws && colcon build"
 
 run_step "Installing Webots package" ./robotis-op3/install_webots_package.sh
+run_step "Installing ROS2 Jazzy Webots" ./robotis-op3/install_ros2_jazzy_webots.sh
 
 run_step "Second colcon build" bash -c "cd ~/robotis_ws && colcon build"
 
